@@ -313,9 +313,9 @@ dijalankan sebagai proses terpisah (bukan di-link), jadi kode Getto tetap MIT.
 ### Penggunaan yang bertanggung jawab
 
 Getto adalah alat teknis: ia mengunduh apa pun URL yang kamu berikan. Getto
-tidak menyediakan akses ke konten berhak-cipta dan **tidak menyebutkan /
-menyediakan tautan ke** konten yang才是最 sering dilindungi — semuanya
-berasal dari URL yang kamu sendiri tempel atau klik.
+tidak menyediakan akses ke konten berhak-cipta, **tidak menyediakan tautan
+atau daftar menuju konten tertentu**, dan tidak memuat konten apa pun —
+semuanya berasal dari URL yang kamu sendiri tempel atau klik.
 
 Kamu bertanggung jawab penuh atas:
 
