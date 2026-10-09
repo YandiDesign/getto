@@ -1,0 +1,40 @@
+# macOS
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcworkspace/xcuserdata/
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Kunci privat & sertifikat — JANGAN pernah di-commit.
+# getto-extension-key.pem = private key Chrome extension ID
+# 0n9n3m074864m7mlo9n519nll233ok3l (public key-nya ada di
+# chrome-extension/manifest.json). Commit ini = siapa pun bisa menandatangani
+# update untuk ID tersebut.
+*.pem
+*.p12
+*.cer
+*.mobileprovision
+*.keystore
+
+# Binary pendukung hasil unduh scripts/fetch-binaries.sh (~230 MB).
+# Bukan bagian dari source: script yang mengunduhnya, bukan repo yang menyimpan.
+# Lisensi tiap binary ada di THIRD_PARTY_NOTICES.md.
+Getto/Resources/bin/
+
+# Rahasia lain
+.env
+.env.*
+secrets.*

@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "Getto — Kirim ke Download Manager",
+  "version": "1.0.0",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoVHmDXrp+hHHEMJCiZJLxFbUMRy1bosV3c6AZx2QfVjqJ5O0D3AtAXfXKp5kMvfhLtLZv5XdFXgVzDnGVLWpHIuj+37uZfaNdBSAXu9o8AFJ+2sqx2dZULFzS1Ozr4wIWUXzlaENL1fYRVOT2Xc3VxkniQCjBJIHF/16hvI3Ab6RM67gsbxBg437aGU4lR+i9Ce94ThDRFX0qPJy9Q5BwqJmQHOF6Zw1c1zlURHSfHf4OOEOZyENSTb39dtF0011OloPUFtO/NdpIBTJizpwA9baVC7U4eJP2XQkbk7GTQj58k+inZDmGzl81aM6QhvLl7ipyX2Zpbx6/W45jw/GcwIDAQAB",
+  "description": "Kirim link & video langsung ke aplikasi Getto di macOS.",
+  "permissions": [
+    "contextMenus",
+    "downloads",
+    "activeTab",
+    "cookies",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Kirim ke Getto"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.youtube.com/*",
+        "*://www.tiktok.com/*",
+        "*://www.instagram.com/*",
+        "*://twitter.com/*",
+        "*://x.com/*",
+        "*://www.facebook.com/*",
+        "*://vimeo.com/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  }
+}

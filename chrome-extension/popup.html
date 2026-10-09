@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 368px;
+    font-family: -apple-system, "SF Pro Text", "Segoe UI", sans-serif;
+    color: #1c2b4a;
+    background: linear-gradient(160deg, #e9f1fa 0%, #dce8f6 55%, #cfe0f4 100%);
+    padding: 14px 14px 12px;
+    font-size: 13px;
+  }
+  /* ---------- header ---------- */
+  .header { display: flex; align-items: center; gap: 10px; padding: 2px 2px 12px; }
+  .header img.logo {
+    width: 46px; height: 46px; border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 110, 255, 0.35);
+  }
+  .header .title { flex: 1; min-width: 0; }
+  .header .title b { font-size: 21px; font-weight: 700; letter-spacing: -0.3px; display: block; line-height: 1.1; }
+  .header .title span { font-size: 11.5px; color: #6b7d99; }
+  .iconbtn {
+    width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(28, 43, 74, 0.14);
+    background: rgba(255, 255, 255, 0.65); color: #42557a; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; font-size: 14px;
+  }
+  .iconbtn:hover { background: #fff; }
+  /* ---------- kartu ---------- */
+  .card {
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 10px rgba(60, 100, 160, 0.10);
+    border-radius: 16px;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+  .card.tint { background: linear-gradient(150deg, #e3efff 0%, #d3e5fb 100%); }
+  .rowhead { display: flex; align-items: center; gap: 10px; }
+  .tile {
+    width: 38px; height: 38px; border-radius: 10px; flex: none;
+    background: linear-gradient(150deg, #dbe9fd, #c3d9f8);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 18px; color: #1f6feb;
+  }
+  .rowhead .txt { flex: 1; min-width: 0; }
+  .rowhead .txt b { font-size: 13.5px; display: block; }
+  .rowhead .txt span { font-size: 11.5px; color: #6b7d99; display: block; margin-top: 1px; }
+  .count {
+    min-width: 26px; height: 26px; padding: 0 7px; border-radius: 13px;
+    background: #e4edf9; color: #42557a; font-size: 12px; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .chev { border: none; background: none; color: #42557a; font-size: 14px; cursor: pointer; padding: 4px; }
+  /* ---------- tombol ---------- */
+  .btn {
+    border: none; cursor: pointer; font-size: 13px; font-weight: 600;
+    border-radius: 12px; padding: 9px 18px; white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-primary { background: linear-gradient(180deg, #2f8bff, #0f63e8); color: #fff; box-shadow: 0 3px 10px rgba(15, 99, 232, 0.35); }
+  .btn-primary:hover { filter: brightness(1.06); }
+  .btn-outline { background: #fff; color: #0f63e8; border: 1px solid #bcd3f2; box-shadow: none; }
+  .btn-outline:hover { background: #f0f6ff; }
+  /* ---------- daftar media ---------- */
+  #mediaList { margin-top: 10px; display: flex; flex-direction: column; gap: 10px; }
+  #mediaList.hidden { display: none; }
+  .mrow {
+    display: flex; gap: 10px; align-items: center;
+    border-top: 1px solid rgba(28, 43, 74, 0.08); padding-top: 10px;
+  }
+  .mrow:first-child { border-top: none; padding-top: 2px; }
+  .thumb {
+    width: 84px; height: 56px; border-radius: 9px; flex: none; object-fit: cover;
+    background: #d7e4f5; display: block;
+  }
+  .thumbwrap { position: relative; flex: none; }
+  .playbadge {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 26px; height: 26px; border-radius: 50%;
+    background: rgba(20, 25, 40, 0.72); color: #fff; font-size: 11px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .thumbicon {
+    width: 84px; height: 56px; border-radius: 9px; flex: none;
+    background: #eef3fa; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 24px;
+  }
+  .minfo { flex: 1; min-width: 0; }
+  .minfo b { font-size: 12.5px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .minfo span { font-size: 11px; color: #6b7d99; display: block; margin-top: 3px; }
+  .empty { font-size: 12px; color: #6b7d99; padding: 6px 2px 2px; }
+  /* ---------- tempel manual ---------- */
+  .pasteRow { display: flex; align-items: center; gap: 10px; }
+  .pasteRow .txt { flex: 1; }
+  /* ---------- settings ---------- */
+  #settingsCard { display: none; }
+  #settingsCard.open { display: block; }
+  #logCard { display: none; }
+  #logCard.open { display: block; }
+  .setrow { display: flex; align-items: center; gap: 8px; font-size: 12.5px; padding: 4px 2px; }
+  .setrow input { accent-color: #0f63e8; width: 15px; height: 15px; }
+  .setrow small { display: block; color: #6b7d99; font-size: 11px; }
+  /* ---------- switch ---------- */
+  .switch { position: relative; display: inline-block; width: 40px; height: 23px; flex: none; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .switch .knob {
+    position: absolute; inset: 0; border-radius: 12px; cursor: pointer;
+    background: #c3d2e8; transition: background 0.15s;
+  }
+  .switch .knob:before {
+    content: ""; position: absolute; width: 17px; height: 17px; border-radius: 50%;
+    left: 3px; top: 3px; background: #fff; transition: transform 0.15s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  }
+  .switch input:checked + .knob { background: linear-gradient(180deg, #2f8bff, #0f63e8); }
+  .switch input:checked + .knob:before { transform: translateX(17px); }
+  /* ---------- toast + footer ---------- */
+  #toast {
+    display: none; font-size: 12px; text-align: center;
+    background: rgba(28, 43, 74, 0.88); color: #fff; border-radius: 10px;
+    padding: 8px 10px; margin-bottom: 10px;
+  }
+  #toast.show { display: block; }
+  #toast.ok { background: rgba(18, 130, 60, 0.92); }
+  #toast.err { background: rgba(178, 44, 44, 0.92); }
+  .footer { display: flex; align-items: center; gap: 6px; padding: 2px 4px 0; font-size: 11.5px; color: #6b7d99; }
+  .footer .spacer { flex: 1; }
+  .osbadge {
+    background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(28, 43, 74, 0.10);
+    border-radius: 9px; padding: 3px 8px; font-size: 10.5px; color: #42557a;
+  }
+</style>
+</head>
+<body>
+  <div class="header">
+    <img class="logo" src="icons/icon-128.png" alt="Getto">
+    <div class="title"><b>Getto</b><span>Download Manager untuk macOS</span></div>
+    <button class="iconbtn" id="gearBtn" title="Pengaturan">⚙</button>
+    <button class="iconbtn" id="copyIdBtn" title="Salin ID ekstensi (untuk Getto → Browser)">📌</button>
+  </div>
+
+  <div id="toast"></div>
+
+  <div class="card">
+    <div class="pasteRow">
+      <span class="tile">⏻</span>
+      <div class="txt"><b>Getto aktif</b><br><span style="font-size:11.5px;color:#6b7d99">Matikan untuk download manual via Chrome</span></div>
+      <label class="switch"><input type="checkbox" id="enabledChk" checked><span class="knob"></span></label>
+    </div>
+  </div>
+
+  <div class="card" id="settingsCard">
+    <div class="setrow">
+      <input type="checkbox" id="takeoverChk">
+      <label for="takeoverChk">Alihkan unduhan besar ke Getto<small>File ≥ 50 MB atau zip, dmg, pkg, iso, mp4… otomatis dikirim ke Getto.</small></label>
+    </div>
+  </div>
+
+  <div class="card tint">
+    <div class="rowhead">
+      <span class="tile">🔗</span>
+      <div class="txt"><b>Kirim halaman ke Getto</b><span>Akan mengirim URL halaman ini ke aplikasi Getto untuk didownload.</span></div>
+      <button class="btn btn-primary" id="sendTabBtn">Kirim</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="rowhead">
+      <span class="tile">🖼</span>
+      <div class="txt"><b>Media terdeteksi</b><span>Video, gambar, dan file yang bisa diunduh dari halaman ini.</span></div>
+      <span class="count" id="mediaCount">0</span>
+      <button class="chev" id="collapseBtn" title="Ciutkan">▾</button>
+    </div>
+    <div id="mediaList"></div>
+  </div>
+
+  <div class="card">
+    <div class="pasteRow">
+      <span class="tile">🔗</span>
+      <div class="txt"><b>Download link</b><br><span style="font-size:11.5px;color:#6b7d99">Tempel URL secara manual</span></div>
+      <button class="btn btn-outline" id="pasteBtn">📋 Tempel</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>⚡ Didukung oleh <b>Getto</b></span>
+    <span class="spacer"></span>
+    <button class="osbadge" id="logBtn" style="cursor:pointer;border:1px solid rgba(28,43,74,0.10);font-size:10.5px;color:#42557a;">📋 Log</button>
+    <span class="osbadge">🍎 macOS 13+</span>
+  </div>
+
+  <div class="card" id="logCard" style="margin-top:10px;">
+    <div class="rowhead">
+      <div class="txt"><b>Log diagnosis</b><span>Kirim isi ini bila ada error.</span></div>
+      <button class="btn btn-outline" id="copyLogBtn" style="padding:7px 12px;">Salin</button>
+      <button class="btn btn-outline" id="clearLogBtn" style="padding:7px 12px;">Hapus</button>
+    </div>
+    <pre id="logPre" style="margin-top:8px;max-height:160px;overflow:auto;font-size:10.5px;background:rgba(28,43,74,0.06);border-radius:8px;padding:8px;white-space:pre-wrap;word-break:break-all;">(belum dimuat)</pre>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

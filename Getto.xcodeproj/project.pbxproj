@@ -1,0 +1,572 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		700000000000000000000001 /* GettoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000001 /* GettoApp.swift */; };
+		700000000000000000000002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000002 /* AppDelegate.swift */; };
+		700000000000000000000003 /* DownloadItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000003 /* DownloadItem.swift */; };
+		700000000000000000000004 /* TorrentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000004 /* TorrentInfo.swift */; };
+		700000000000000000000005 /* MediaInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000005 /* MediaInfo.swift */; };
+		700000000000000000000006 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000006 /* AppSettings.swift */; };
+		700000000000000000000007 /* DownloadEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000007 /* DownloadEngine.swift */; };
+		700000000000000000000008 /* EngineProcessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000008 /* EngineProcessManager.swift */; };
+		700000000000000000000009 /* Aria2Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000009 /* Aria2Engine.swift */; };
+		700000000000000000000010 /* MediaEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000010 /* MediaEngine.swift */; };
+		700000000000000000000011 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000011 /* Logger.swift */; };
+		700000000000000000000012 /* PersistenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000012 /* PersistenceStore.swift */; };
+		700000000000000000000013 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000013 /* NotificationService.swift */; };
+		700000000000000000000014 /* ClipboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000014 /* ClipboardService.swift */; };
+		700000000000000000000015 /* NativeHostInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000015 /* NativeHostInstaller.swift */; };
+		700000000000000000000016 /* QueueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000016 /* QueueManager.swift */; };
+		700000000000000000000030 /* QuickLookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000035 /* QuickLookService.swift */; };
+		700000000000000000000033 /* LocalHTTPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000037 /* LocalHTTPServer.swift */; };
+		700000000000000000000017 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000017 /* SidebarView.swift */; };
+		700000000000000000000018 /* DownloadListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000018 /* DownloadListView.swift */; };
+		700000000000000000000019 /* DetailPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000019 /* DetailPanel.swift */; };
+		700000000000000000000020 /* AddDownloadSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000020 /* AddDownloadSheet.swift */; };
+		700000000000000000000021 /* MediaPreviewSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000021 /* MediaPreviewSheet.swift */; };
+		700000000000000000000022 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000022 /* SettingsView.swift */; };
+		700000000000000000000023 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000023 /* MenuBarView.swift */; };
+		700000000000000000000032 /* GlassViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000036 /* GlassViews.swift */; };
+		700000000000000000000024 /* DownloadListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000024 /* DownloadListViewModel.swift */; };
+		700000000000000000000025 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000025 /* SettingsViewModel.swift */; };
+		700000000000000000000026 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000026 /* main.swift */; };
+		700000000000000000000027 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000027 /* Assets.xcassets */; };
+		700000000000000000000028 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 810000000000000000000001 /* Localizable.strings */; };
+		700000000000000000000029 /* bin in Resources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000030 /* bin */; };
+		700000000000000000000040 /* licenses in Resources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000040 /* licenses */; };
+		700000000000000000000041 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000041 /* LICENSE */; };
+		700000000000000000000042 /* THIRD_PARTY_NOTICES.md in Resources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000042 /* THIRD_PARTY_NOTICES.md */; };
+		900000000000000000000012 /* QuickLookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 900000000000000000000011 /* QuickLookUI.framework */; };
+/* End PBXBuildFile section */
+
+
+
+/* Begin PBXFileReference section */
+		800000000000000000000001 /* GettoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GettoApp.swift; sourceTree = "<group>"; };
+		800000000000000000000002 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		800000000000000000000003 /* DownloadItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadItem.swift; sourceTree = "<group>"; };
+		800000000000000000000004 /* TorrentInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentInfo.swift; sourceTree = "<group>"; };
+		800000000000000000000005 /* MediaInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaInfo.swift; sourceTree = "<group>"; };
+		800000000000000000000006 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		800000000000000000000007 /* DownloadEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadEngine.swift; sourceTree = "<group>"; };
+		800000000000000000000008 /* EngineProcessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineProcessManager.swift; sourceTree = "<group>"; };
+		800000000000000000000009 /* Aria2Engine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aria2Engine.swift; sourceTree = "<group>"; };
+		800000000000000000000010 /* MediaEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaEngine.swift; sourceTree = "<group>"; };
+		800000000000000000000011 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		800000000000000000000012 /* PersistenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceStore.swift; sourceTree = "<group>"; };
+		800000000000000000000013 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		800000000000000000000014 /* ClipboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardService.swift; sourceTree = "<group>"; };
+		800000000000000000000015 /* NativeHostInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeHostInstaller.swift; sourceTree = "<group>"; };
+		800000000000000000000035 /* QuickLookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookService.swift; sourceTree = "<group>"; };
+		800000000000000000000037 /* LocalHTTPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalHTTPServer.swift; sourceTree = "<group>"; };
+		800000000000000000000016 /* QueueManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueManager.swift; sourceTree = "<group>"; };
+		800000000000000000000017 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		800000000000000000000018 /* DownloadListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadListView.swift; sourceTree = "<group>"; };
+		800000000000000000000019 /* DetailPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPanel.swift; sourceTree = "<group>"; };
+		800000000000000000000020 /* AddDownloadSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDownloadSheet.swift; sourceTree = "<group>"; };
+		800000000000000000000021 /* MediaPreviewSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPreviewSheet.swift; sourceTree = "<group>"; };
+		800000000000000000000022 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		800000000000000000000023 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		800000000000000000000036 /* GlassViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassViews.swift; sourceTree = "<group>"; };
+		800000000000000000000024 /* DownloadListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadListViewModel.swift; sourceTree = "<group>"; };
+		800000000000000000000025 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		800000000000000000000026 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		800000000000000000000027 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		800000000000000000000028 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
+		800000000000000000000029 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		800000000000000000000030 /* bin */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bin; sourceTree = "<group>"; };
+		800000000000000000000031 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		800000000000000000000032 /* Getto.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Getto.entitlements; sourceTree = "<group>"; };
+		800000000000000000000040 /* licenses */ = {isa = PBXFileReference; lastKnownFileType = folder; path = licenses; sourceTree = "<group>"; };
+		800000000000000000000041 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		800000000000000000000042 /* THIRD_PARTY_NOTICES.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = THIRD_PARTY_NOTICES.md; sourceTree = "<group>"; };
+		800000000000000000000033 /* Getto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Getto.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		800000000000000000000034 /* GettoNativeHost */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GettoNativeHost; sourceTree = BUILT_PRODUCTS_DIR; };
+		900000000000000000000011 /* QuickLookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookUI.framework; path = System/Library/Frameworks/QuickLookUI.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		600000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				900000000000000000000012 /* QuickLookUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		200000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				200000000000000000000002 /* Getto */,
+				200000000000000000000011 /* Products */,
+				800000000000000000000041 /* LICENSE */,
+				800000000000000000000042 /* THIRD_PARTY_NOTICES.md */,
+			);
+			sourceTree = "<group>";
+		};
+		200000000000000000000002 /* Getto */ = {
+			isa = PBXGroup;
+			children = (
+				200000000000000000000003 /* App */,
+				200000000000000000000004 /* Models */,
+				200000000000000000000005 /* Engines */,
+				200000000000000000000006 /* Services */,
+				200000000000000000000007 /* Views */,
+				200000000000000000000008 /* ViewModels */,
+				200000000000000000000009 /* NativeHost */,
+				200000000000000000000010 /* Resources */,
+				800000000000000000000031 /* Info.plist */,
+				800000000000000000000032 /* Getto.entitlements */,
+			);
+			path = Getto;
+			sourceTree = "<group>";
+		};
+		200000000000000000000003 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				800000000000000000000001 /* GettoApp.swift */,
+				800000000000000000000002 /* AppDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		200000000000000000000004 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				800000000000000000000003 /* DownloadItem.swift */,
+				800000000000000000000004 /* TorrentInfo.swift */,
+				800000000000000000000005 /* MediaInfo.swift */,
+				800000000000000000000006 /* AppSettings.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		200000000000000000000005 /* Engines */ = {
+			isa = PBXGroup;
+			children = (
+				800000000000000000000007 /* DownloadEngine.swift */,
+				800000000000000000000008 /* EngineProcessManager.swift */,
+				800000000000000000000009 /* Aria2Engine.swift */,
+				800000000000000000000010 /* MediaEngine.swift */,
+			);
+			path = Engines;
+			sourceTree = "<group>";
+		};
+		200000000000000000000006 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				800000000000000000000011 /* Logger.swift */,
+				800000000000000000000012 /* PersistenceStore.swift */,
+				800000000000000000000013 /* NotificationService.swift */,
+				800000000000000000000014 /* ClipboardService.swift */,
+				800000000000000000000015 /* NativeHostInstaller.swift */,
+				800000000000000000000035 /* QuickLookService.swift */,
+				800000000000000000000037 /* LocalHTTPServer.swift */,
+				800000000000000000000016 /* QueueManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		200000000000000000000007 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				800000000000000000000017 /* SidebarView.swift */,
+				800000000000000000000018 /* DownloadListView.swift */,
+				800000000000000000000019 /* DetailPanel.swift */,
+				800000000000000000000020 /* AddDownloadSheet.swift */,
+				800000000000000000000021 /* MediaPreviewSheet.swift */,
+				800000000000000000000022 /* SettingsView.swift */,
+				800000000000000000000023 /* MenuBarView.swift */,
+				800000000000000000000036 /* GlassViews.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		200000000000000000000008 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				800000000000000000000024 /* DownloadListViewModel.swift */,
+				800000000000000000000025 /* SettingsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		200000000000000000000009 /* NativeHost */ = {
+			isa = PBXGroup;
+			children = (
+				800000000000000000000026 /* main.swift */,
+			);
+			path = NativeHost;
+			sourceTree = "<group>";
+		};
+		200000000000000000000010 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				800000000000000000000027 /* Assets.xcassets */,
+				810000000000000000000001 /* Localizable.strings */,
+				800000000000000000000030 /* bin */,
+				800000000000000000000040 /* licenses */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		200000000000000000000011 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				800000000000000000000033 /* Getto.app */,
+				800000000000000000000034 /* GettoNativeHost */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		300000000000000000000001 /* Getto */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 400000000000000000000002 /* Build configuration list for PBXNativeTarget "Getto" */;
+			buildPhases = (
+				600000000000000000000001 /* Frameworks */,
+				600000000000000000000002 /* Sources */,
+				600000000000000000000003 /* Resources */,
+				600000000000000000000006 /* Embed Native Host */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				900000000000000000000003 /* PBXTargetDependency */,
+			);
+			name = Getto;
+			productName = Getto;
+			productReference = 800000000000000000000033 /* Getto.app */;
+			productType = "com.apple.product-type.application";
+		};
+		300000000000000000000002 /* GettoNativeHost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 400000000000000000000003 /* Build configuration list for PBXNativeTarget "GettoNativeHost" */;
+			buildPhases = (
+				600000000000000000000005 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GettoNativeHost;
+			productName = GettoNativeHost;
+			productReference = 800000000000000000000034 /* GettoNativeHost */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		100000000000000000000000 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					300000000000000000000001 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					300000000000000000000002 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 400000000000000000000001 /* Build configuration list for PBXProject "Getto" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				id,
+			);
+			mainGroup = 200000000000000000000001;
+			productRefGroup = 200000000000000000000011 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				300000000000000000000001 /* Getto */,
+				300000000000000000000002 /* GettoNativeHost */,
+			);
+		};
+/* End PBXProject section */
+
+
+/* Begin PBXResourcesBuildPhase section */
+		600000000000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				700000000000000000000027 /* Assets.xcassets in Resources */,
+				700000000000000000000028 /* Localizable.strings in Resources */,
+				700000000000000000000029 /* bin in Resources */,
+				700000000000000000000040 /* licenses in Resources */,
+				700000000000000000000041 /* LICENSE in Resources */,
+				700000000000000000000042 /* THIRD_PARTY_NOTICES.md in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		600000000000000000000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				700000000000000000000001 /* GettoApp.swift in Sources */,
+				700000000000000000000002 /* AppDelegate.swift in Sources */,
+				700000000000000000000003 /* DownloadItem.swift in Sources */,
+				700000000000000000000004 /* TorrentInfo.swift in Sources */,
+				700000000000000000000005 /* MediaInfo.swift in Sources */,
+				700000000000000000000006 /* AppSettings.swift in Sources */,
+				700000000000000000000007 /* DownloadEngine.swift in Sources */,
+				700000000000000000000008 /* EngineProcessManager.swift in Sources */,
+				700000000000000000000009 /* Aria2Engine.swift in Sources */,
+				700000000000000000000010 /* MediaEngine.swift in Sources */,
+				700000000000000000000011 /* Logger.swift in Sources */,
+				700000000000000000000012 /* PersistenceStore.swift in Sources */,
+				700000000000000000000013 /* NotificationService.swift in Sources */,
+				700000000000000000000014 /* ClipboardService.swift in Sources */,
+				700000000000000000000015 /* NativeHostInstaller.swift in Sources */,
+				700000000000000000000016 /* QueueManager.swift in Sources */,
+				700000000000000000000030 /* QuickLookService.swift in Sources */,
+				700000000000000000000033 /* LocalHTTPServer.swift in Sources */,
+				700000000000000000000017 /* SidebarView.swift in Sources */,
+				700000000000000000000018 /* DownloadListView.swift in Sources */,
+				700000000000000000000019 /* DetailPanel.swift in Sources */,
+				700000000000000000000020 /* AddDownloadSheet.swift in Sources */,
+				700000000000000000000021 /* MediaPreviewSheet.swift in Sources */,
+				700000000000000000000022 /* SettingsView.swift in Sources */,
+				700000000000000000000023 /* MenuBarView.swift in Sources */,
+				700000000000000000000032 /* GlassViews.swift in Sources */,
+				700000000000000000000024 /* DownloadListViewModel.swift in Sources */,
+				700000000000000000000025 /* SettingsViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		600000000000000000000005 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				700000000000000000000026 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		900000000000000000000003 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 300000000000000000000002 /* GettoNativeHost */;
+			targetProxy = 900000000000000000000002 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		810000000000000000000001 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				800000000000000000000028 /* id */,
+				800000000000000000000029 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		600000000000000000000006 /* Embed Native Host */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Native Host";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -f \"$BUILT_PRODUCTS_DIR/GettoNativeHost\" ]; then\ncp -f \"$BUILT_PRODUCTS_DIR/GettoNativeHost\" \"$TARGET_BUILD_DIR/$CONTENTS_FOLDER_PATH/MacOS/GettoNativeHost\"\ncodesign --force -s - \"$TARGET_BUILD_DIR/$CONTENTS_FOLDER_PATH/MacOS/GettoNativeHost\" || true\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		500000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "arm64 x86_64";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		500000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "arm64 x86_64";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		500000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Getto/Getto.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Getto/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.getto.app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		500000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Getto/Getto.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Getto/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.getto.app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		500000000000000000000005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		500000000000000000000006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		400000000000000000000001 /* Build configuration list for PBXProject "Getto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				500000000000000000000001 /* Debug */,
+				500000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		400000000000000000000002 /* Build configuration list for PBXNativeTarget "Getto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				500000000000000000000003 /* Debug */,
+				500000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		400000000000000000000003 /* Build configuration list for PBXNativeTarget "GettoNativeHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				500000000000000000000005 /* Debug */,
+				500000000000000000000006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 100000000000000000000000 /* Project object */;
+}
