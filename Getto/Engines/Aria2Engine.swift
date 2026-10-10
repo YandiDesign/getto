@@ -126,7 +126,10 @@ final class Aria2Engine: DownloadEngine {
     }
 
     func status(engineId: String) async throws -> EngineStatus? {
-        let result = try await rpc(method: "aria2.tellStatus", params: [engineId, ["gid", "status", "totalLength", "completedLength", "downloadSpeed", "uploadSpeed", "eta", "numSeeders", "connections", "errorMessage", "bittorrent"]])
+        let keys = ["gid", "status", "totalLength", "completedLength", "downloadSpeed",
+                    "uploadSpeed", "eta", "numSeeders", "connections", "errorMessage",
+                    "bittorrent", "followedBy", "files"]
+        let result = try await rpc(method: "aria2.tellStatus", params: [engineId, keys])
         guard let dict = result as? [String: Any] else { return nil }
         let total = Int64(dict["totalLength"] as? String ?? "0") ?? 0
         let done = Int64(dict["completedLength"] as? String ?? "0") ?? 0
@@ -139,11 +142,20 @@ final class Aria2Engine: DownloadEngine {
         let seeds = Int(dict["numSeeders"] as? String ?? "0") ?? 0
         let peers = Int(dict["connections"] as? String ?? "0") ?? 0
         let errMsg = dict["errorMessage"] as? String
+        // Magnet: aria2 menandai unduhan metadata sebagai `complete` lalu
+        // memindahkan isi ke gid baru — `followedBy` berisi gid tersebut.
+        let follows = (dict["followedBy"] as? [Any])?.compactMap { $0 as? String }.first
+        let paths = (dict["files"] as? [[String: Any]])?
+            .compactMap { $0["path"] as? String } ?? []
+        let mode = (dict["bittorrent"] as? [String: Any])?["mode"] as? String
         return EngineStatus(
             totalBytes: total, downloadedBytes: done, speedBytesPerSec: speed,
             etaSeconds: max(0, eta), numSeeds: seeds, numPeers: peers, uploadSpeed: up,
             isComplete: st == "complete",
-            errorMessage: (errMsg?.isEmpty == false) ? errMsg : nil
+            errorMessage: (errMsg?.isEmpty == false) ? errMsg : nil,
+            followsGid: follows,
+            filePaths: paths,
+            isMultiFileTorrent: (mode == "multi")
         )
     }
 

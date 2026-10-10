@@ -22,6 +22,16 @@ struct EngineStatus {
     var uploadSpeed: Int64
     var isComplete: Bool
     var errorMessage: String?
+    /// Magnet tanpa metadata: aria2 lebih dulu mengunduh metadata (.torrent),
+    /// lalu MEMINDAHKAN isi torrent ke gid baru. Unduhan metadata itu sendiri
+    /// dilaporkan `complete`, jadi `isComplete` pada fase itu bukan berarti
+    /// torrent selesai. Nilai ini = gid unduhan isi yang sebenarnya
+    /// (isi `followedBy` dari aria2).
+    var followsGid: String?
+    /// Path file yang sedang diunduh (untuk menunjuk hasil yang sebenarnya).
+    var filePaths: [String] = []
+    /// True bila torrent >1 file (aria2 membuat folder, bukan file tunggal).
+    var isMultiFileTorrent: Bool = false
 }
 
 enum EngineError: LocalizedError {

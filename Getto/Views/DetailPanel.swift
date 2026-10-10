@@ -196,7 +196,7 @@ struct DetailPanel: View {
                     }
                 }
 
-                if let phase = item.phaseDescription, item.isMedia {
+                if let phase = item.phaseDescription, item.isMedia || item.isTorrent {
                     Text(phase)
                         .font(.system(size: 12))
                         .foregroundColor(.secondary)

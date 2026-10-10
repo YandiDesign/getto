@@ -705,7 +705,42 @@ final class QueueManager: ObservableObject {
                             if st.totalBytes > 0 {
                                 self.items[idx].ratio = Double(st.uploadSpeed) / max(1, Double(st.speedBytesPerSec))
                             }
-                            if st.isComplete {
+                            // Tunjuk hasil yang sebenarnya. Torrent magnets diberi nama
+                            // sementara "magnet-xxxx"; nama asli baru diketahui
+                            // setelah metadata masuk. Lewati pseudo-file metadata
+                            // aria2 ("[METADATA]...").
+                            if self.items[idx].isTorrent,
+                               let real = st.filePaths.first(where: { !$0.hasPrefix("[METADATA]") }) {
+                                let final = st.isMultiFileTorrent
+                                    ? (real as NSString).deletingLastPathComponent
+                                    : real
+                                if final != self.items[idx].destinationPath {
+                                    self.items[idx].destinationPath = final
+                                    self.items[idx].fileName =
+                                        DownloadItem.sanitizedFileName((final as NSString).lastPathComponent)
+                                }
+                            }
+                            // Magnet: aria2 lebih dulu mengunduh metadata
+                            // (.torrent) dan melaporkan unduhan itu `complete`,
+                            // lalu MEMINDAHKAN isi ke gid baru. Tanpa ini item
+                            // ditandai selesai pada ukuran metadata dan unduhan
+                            // isi yang sebenarnya jadi tidak pernah dilacak.
+                            if let next = st.followsGid {
+                                self.items[idx].engineId = next
+                                self.rpcFailCount.removeValue(forKey: next)
+                                self.items[idx].phaseDescription = nil
+                            } else if self.items[idx].isTorrent,
+                                      !st.isComplete,
+                                      st.totalBytes == 0,
+                                      self.items[idx].status == .downloading {
+                                // Magnet belum dapat metadata: total masih 0, jadi
+                                // progres akan 0% — beri tahu agar tidak terlihat
+                                // macet tanpa sebab.
+                                self.items[idx].phaseDescription = NSLocalizedString(
+                                    "torrent.metadata",
+                                    value: "Mengambil metadata torrent…",
+                                    comment: "")
+                            } else if st.isComplete {
                                 let donePath = self.items[idx].destinationPath
                                 let doneName = self.items[idx].fileName
                                 if !self.items[idx].isMedia && QueueManager.isHTMLInterstitial(path: donePath, fileName: doneName) {
