@@ -154,6 +154,7 @@ private struct SidebarRow: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .noFocusRing()
         .focusable(false)
         .onHover { hovering = $0 }
         .accessibilityLabel(title)

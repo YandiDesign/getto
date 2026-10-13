@@ -180,3 +180,21 @@
 "settings.cookiesFromBrowser" = "Automatic browser cookies (video)";
 "settings.cookiesFromBrowser.off" = "Off";
 "settings.cookiesFromBrowser.note" = "For manually pasted links (not via extension). Needs keychain access once.";
+
+// Multi-select downloads + delete options
+"select.enter" = "Select downloads";
+"select.done" = "Done";
+"select.title" = "Select Downloads";
+"select.titleCount" = "%d Selected";
+"select.count" = "%d selected";
+"select.all" = "Select All";
+"select.none" = "Deselect All";
+"common.cancel" = "Cancel";
+"delete.title.single" = "Delete this download?";
+"delete.title.multi" = "Delete %d downloads?";
+"delete.body.noFile" = "There is no downloaded file on disk for this item.";
+"delete.body.free" = "%@ will be moved to the Trash.";
+"delete.action.files" = "Delete Files";
+"delete.action.files.sub" = "Files move to the Trash and are removed from the list";
+"delete.action.listOnly" = "Remove from List Only";
+"delete.action.listOnly.sub" = "Files stay in your downloads folder";

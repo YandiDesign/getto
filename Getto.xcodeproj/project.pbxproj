@@ -33,6 +33,7 @@
 		700000000000000000000022 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000022 /* SettingsView.swift */; };
 		700000000000000000000023 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000023 /* MenuBarView.swift */; };
 		700000000000000000000032 /* GlassViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000036 /* GlassViews.swift */; };
+		700000000000000000000037 /* DeleteDownloadsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000038 /* DeleteDownloadsSheet.swift */; };
 		700000000000000000000024 /* DownloadListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000024 /* DownloadListViewModel.swift */; };
 		700000000000000000000025 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000025 /* SettingsViewModel.swift */; };
 		700000000000000000000026 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800000000000000000000026 /* main.swift */; };
@@ -74,6 +75,7 @@
 		800000000000000000000022 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		800000000000000000000023 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		800000000000000000000036 /* GlassViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassViews.swift; sourceTree = "<group>"; };
+		800000000000000000000038 /* DeleteDownloadsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteDownloadsSheet.swift; sourceTree = "<group>"; };
 		800000000000000000000024 /* DownloadListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadListViewModel.swift; sourceTree = "<group>"; };
 		800000000000000000000025 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		800000000000000000000026 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				800000000000000000000022 /* SettingsView.swift */,
 				800000000000000000000023 /* MenuBarView.swift */,
 				800000000000000000000036 /* GlassViews.swift */,
+				800000000000000000000038 /* DeleteDownloadsSheet.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 				700000000000000000000022 /* SettingsView.swift in Sources */,
 				700000000000000000000023 /* MenuBarView.swift in Sources */,
 				700000000000000000000032 /* GlassViews.swift in Sources */,
+				700000000000000000000037 /* DeleteDownloadsSheet.swift in Sources */,
 				700000000000000000000024 /* DownloadListViewModel.swift in Sources */,
 				700000000000000000000025 /* SettingsViewModel.swift in Sources */,
 			);

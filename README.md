@@ -1,4 +1,7 @@
-# Getto — Download Manager Native untuk macOS
+<div align="center">
+  <img src="assets/getto-logo.png" alt="Getto" width="140">
+  <h1>Getto — Download Manager Native untuk macOS</h1>
+</div>
 
 Getto adalah download manager native untuk macOS (**universal: Intel x86_64
 dan Apple Silicon arm64**, macOS 13+). Prinsipnya sederhana: **tempel link →
@@ -8,8 +11,32 @@ terunduh**, dengan tampilan dan perilaku khas aplikasi bawaan Apple.
 
 ---
 
+## Tangkapan layar
+
+<div align="center">
+  <img src="screenshot/02-list-utama.png" alt="Daftar unduhan" width="820">
+  <br><br>
+  <img src="screenshot/06-panel-detail.png" alt="Panel detail unduhan" width="820">
+  <br><br>
+  <img src="screenshot/05-tampilan-grid.png" alt="Tampilan grid" width="820">
+  <br><br>
+  <img src="screenshot/08-multi-pilih.png" alt="Mode multi-pilih" width="820">
+</div>
+
+| Tampilan | Isi |
+|---|---|
+| [Daftar unduhan](screenshot/02-list-utama.png) | Sidebar + filter, kartuGlass dengan progres/kecepatan, panel detail, kartu kecepatan live. |
+| [Panel detail](screenshot/06-panel-detail.png) | Statistik, aksi (Finder / Quick Look / Salin Link), dan sumber (situs, link berkas, file lokal). |
+| [Tampilan grid](screenshot/05-tampilan-grid.png) | Grid dua kolom untuk daftar yang panjang. |
+| [Urutan](screenshot/04-urutkan.png) | Urutkan: terbaru, terlama, A–Z, Z–A, ukuran terbesar/terkecil. |
+| [Multi-pilih](screenshot/08-multi-pilih.png) | Centang beberapa unduhan lalu hapus sekaligus (pilih hapus file atau hanya dari daftar). |
+| [Menu kartu](screenshot/07-menu-konteks.png) | Klik kanan / tombol `…`: pause, resume, unduh ulang, salin link, Quick Look, buka file, tampilkan di Finder, hapus. |
+
+---
+
 ## Daftar Isi
 
+- [Tangkapan layar](#tangkapan-layar)
 - [Fitur utama](#fitur-utama)
 - [Cara memakai](#cara-memakai)
 - [Jendela utama](#jendela-utama)
@@ -76,6 +103,10 @@ terunduh**, dengan tampilan dan perilaku khas aplikasi bawaan Apple.
 - Tiga kolom: sidebar → daftar kartu kaca → panel info (atau tampilan awal).
 - Mode daftar **dan grid**, sortir (terbaru, terlama, A–Z, Z–A, ukuran),
   pencarian instan.
+- **Multi-pilih & hapus massal:** tombol centang di toolbar atau `⌘A` untuk
+  mencentang semua, lalu hapus beberapa unduhan sekaligus. Saat menghapus,
+  pilihannya: **Hapus File** (berkas ke Sampah) atau **Hapus dari Daftar Saja**
+  (berkas tetap di folder unduhan).
 - **Quick Look**: klik file lalu tekan **Space**; atau klik kanan → Quick Look.
 - **Menu bar extra**: ringkasan kecepatan + unduhan aktif + tempel cepat.
 - Badge progres di Dock, notifikasi selesai/gagal (dengan aksi
@@ -97,6 +128,10 @@ terunduh**, dengan tampilan dan perilaku khas aplikasi bawaan Apple.
    (situs web, link berkas, file lokal — semuanya bisa diklik).
 5. Klik kanan kartu untuk menu lengkap; seret file `.torrent`/link ke
    jendela atau ikon Dock.
+6. Hapus banyak sekaligus: klik tombol centang di toolbar, centang kartu yang
+   mau dihapus (`⌘A` = pilih semua, `Esc` = keluar mode pilih), lalu klik
+   tong sampah di baris bawah → pilih **Hapus File** atau **Hapus dari Daftar
+   Saja**.
 
 ---
 
@@ -105,7 +140,7 @@ terunduh**, dengan tampilan dan perilaku khas aplikasi bawaan Apple.
 | Area | Isi |
 |---|---|
 | Sidebar | Semua Unduhan, Sedang Berjalan, Selesai, Torrent, Video & Audio, Gagal + Kategori (Dokumen, Arsip, Gambar, Musik, Video, Aplikasi). Angka = jumlah item. |
-| Tengah | Kolom cari, judul + ringkasan, toggle daftar/grid, kartu unduhan (pause/resume sekali klik, menu `…` di tepi). |
+| Tengah | Kolom cari, judul + ringkasan, toggle daftar/grid + tombol pilih, kartu unduhan (pause/resume sekali klik, menu `…` di tepi), dan baris aksi bawah saat mode pilih aktif. |
 | Kanan | Toolbar (+, tempel-cepat, mode lambat, shutdown otomatis, pengaturan, tampilan), panel info item terpilih, atau tampilan awal (ikon, tombol Tempel Link, kartu kecepatan live + grafik). |
 
 ---
@@ -190,7 +225,8 @@ oleh Getto — pakai **Pengaturan → Video → Cookie browser otomatis**
 | `⌘F` | Cari |
 | `⌘,` | Pengaturan |
 | `Space` | Quick Look file selesai yang dipilih |
-| `Esc` | Tutup panel detail (kembali ke tampilan awal) |
+| `Esc` | Tutup panel detail (kembali ke tampilan awal) / keluar mode multi-pilih / tutup dialog hapus |
+| `⌘A` | Pilih semua unduhan (saat mode multi-pilih aktif) |
 | `⌥⌘P` / `⌥⌘R` | Jeda / lanjutkan semua |
 | `⌥⌘L` | Mode lambat on/off |
 | `⇧⌘D` | Tampilkan/sembunyikan panel detail |

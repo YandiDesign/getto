@@ -146,8 +146,9 @@ struct AddDownloadSheet: View {
 
             HStack {
                 Spacer()
-                Button(NSLocalizedString("common.cancel", value: "Batal", comment: "")) { dismiss() }
+Button(NSLocalizedString("common.cancel", value: "Batal", comment: "")) { dismiss() }
                     .keyboardShortcut(.cancelAction)
+                    .noFocusRing()
                 Button(action: add) {
                     Text(NSLocalizedString("common.download", value: "Unduh", comment: ""))
                         .font(.system(size: 13.5, weight: .semibold))
@@ -158,9 +159,10 @@ struct AddDownloadSheet: View {
                             (linkText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? Color.gray : Color.blue).gradient,
                             in: RoundedRectangle(cornerRadius: 12, style: .continuous)
                         )
-                        .shadow(color: Color.blue.opacity(0.4), radius: 8, y: 3)
                 }
+                .noFocusRing()
                 .buttonStyle(.plain)
+                .noFocusRing()
                 .keyboardShortcut(.defaultAction)
                 .disabled(linkText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 .accessibilityLabel(NSLocalizedString("common.download", value: "Unduh", comment: ""))
@@ -289,9 +291,11 @@ struct TorrentFilePickerSheet: View {
             HStack {
                 Spacer()
                 Button(NSLocalizedString("common.cancel", value: "Batal", comment: "")) { dismiss() }
+                    .noFocusRing()
                 Button(NSLocalizedString("common.download", value: "Unduh", comment: "")) { onDone(Array(selected).sorted()); dismiss() }
                     .keyboardShortcut(.defaultAction)
                     .disabled(selected.isEmpty)
+                    .noFocusRing()
             }
         }
         .padding()

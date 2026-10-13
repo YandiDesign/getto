@@ -32,6 +32,7 @@ struct SettingsView: View {
                 HStack {
                     Text(vm.settings.downloadDirectory).font(.caption).lineLimit(1).truncationMode(.middle)
                     Button(tr("settings.choose", "Pilih…")) { chooseDownloadDir() }
+                        .noFocusRing()
                 }
             }
             Toggle(tr("settings.firstRunNotice", "Tampilkan catatan tanggung jawab saat pertama dibuka"), isOn: $vm.settings.showFirstRunNotice)
@@ -57,6 +58,7 @@ struct SettingsView: View {
                     Button(tr("settings.language.quitApply", "Keluar & Terapkan")) {
                         NSApp.terminate(nil)
                     }
+                    .noFocusRing()
                 }
             }
             Toggle(tr("settings.notifyDone", "Notifikasi saat unduhan selesai"), isOn: $vm.settings.notifyCompleted)
@@ -114,6 +116,7 @@ struct SettingsView: View {
                 .font(.caption).foregroundColor(.secondary)
             HStack {
                 Button(tr("settings.updateEngine", "Perbarui mesin yt-dlp")) { vm.updateYtDlp() }
+                    .noFocusRing()
                 Text(vm.ytDlpVersion).font(.caption).foregroundColor(.secondary)
             }
             .onAppear { vm.checkYtDlpVersion() }
@@ -164,10 +167,12 @@ struct SettingsView: View {
             TextField(tr("settings.extID", "ID Ekstensi Chrome"), text: $extensionID).font(.caption).textSelection(.enabled)
             HStack {
                 Button(tr("settings.install", "Pasang integrasi")) { vm.installNativeHost(extensionID: extensionID) }
+                    .noFocusRing()
                 Button(tr("settings.openFolder", "Buka folder ekstensi")) {
                     let dir = Bundle.main.bundleURL.deletingLastPathComponent()
                     NSWorkspace.shared.open(dir)
                 }
+                .noFocusRing()
             }
             Text(tr("settings.browserHelp", "Pasang ekstensi: chrome://extensions → Developer mode → Load unpacked → pilih folder chrome-extension. Masukkan ID ekstensi ke kolom di atas, lalu klik Pasang integrasi."))
                 .font(.caption).foregroundColor(.secondary)
@@ -178,9 +183,11 @@ struct SettingsView: View {
     private var advancedTab: some View {
         Form {
             Button(tr("settings.showLog", "Tampilkan Log")) { Logger.revealLog() }
+                .noFocusRing()
             Button(tr("settings.resetQueue", "Reset antrean (hapus semua)")) {
                 QueueManager.shared.clearCompleted()
             }
+            .noFocusRing()
             Text(tr("settings.sandboxNote", "Sandbox: nonaktif. Hardened Runtime: aktif. Binary pendukung ditandatangani di dalam bundle."))
                 .font(.caption).foregroundColor(.secondary)
         }

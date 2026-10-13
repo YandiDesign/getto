@@ -180,3 +180,21 @@
 "settings.cookiesFromBrowser" = "Cookie browser otomatis (video)";
 "settings.cookiesFromBrowser.off" = "Mati";
 "settings.cookiesFromBrowser.note" = "Untuk link yang ditempel manual (tanpa lewat ekstensi). Butuh akses keychain sekali.";
+
+// Multi-pilih unduhan + pilihan hapus
+"select.enter" = "Pilih unduhan";
+"select.done" = "Selesai";
+"select.title" = "Pilih Unduhan";
+"select.titleCount" = "%d Dipilih";
+"select.count" = "%d dipilih";
+"select.all" = "Pilih Semua";
+"select.none" = "Batal Pilih";
+"common.cancel" = "Batal";
+"delete.title.single" = "Hapus unduhan ini?";
+"delete.title.multi" = "Hapus %d unduhan?";
+"delete.body.noFile" = "Tidak ada berkas unduhan di disk untuk item ini.";
+"delete.body.free" = "%@ akan dipindahkan ke Sampah.";
+"delete.action.files" = "Hapus File";
+"delete.action.files.sub" = "Berkas dipindahkan ke Sampah dan dihapus dari daftar";
+"delete.action.listOnly" = "Hapus dari Daftar Saja";
+"delete.action.listOnly.sub" = "Berkas tetap disimpan di folder unduhan";

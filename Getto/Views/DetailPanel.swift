@@ -122,6 +122,7 @@ struct DetailPanel: View {
                 .shadow(color: Color.blue.opacity(0.5), radius: 12, y: 5)
             }
             .buttonStyle(.plain)
+            .noFocusRing()
             .padding(.top, 14)
 
             Spacer()
@@ -305,6 +306,7 @@ struct DetailPanel: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .noFocusRing()
         .accessibilityLabel("\(title): \(value)")
     }
 
@@ -359,6 +361,7 @@ struct DetailPanel: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .noFocusRing()
         .accessibilityLabel(title)
     }
 }

@@ -30,8 +30,60 @@ final class DownloadListViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var selectedId: UUID?
     @Published var layoutGrid: Bool = false
+    /// Mode multi-pilih: kartu menampilkan centang, baris aksi bawah aktif.
+    @Published var selectionMode: Bool = false
+    /// Unduhan yang dicentang saat mode pilih aktif.
+    @Published var selectedIds: Set<UUID> = []
     @Published var sortOrder: SortOrder = SortOrder(rawValue: UserDefaults.standard.string(forKey: "getto.sort") ?? SortOrder.newest.rawValue) ?? .newest {
         didSet { UserDefaults.standard.set(sortOrder.rawValue, forKey: "getto.sort") }
+    }
+
+    // MARK: - Mode pilih
+
+    var hasChecked: Bool { !selectedIds.isEmpty }
+
+    func enterSelectionMode() { selectionMode = true }
+
+    func exitSelectionMode() {
+        selectionMode = false
+        selectedIds.removeAll()
+    }
+
+    func isChecked(_ item: DownloadItem) -> Bool { selectedIds.contains(item.id) }
+
+    func toggleCheck(_ item: DownloadItem) {
+        if selectedIds.contains(item.id) { selectedIds.remove(item.id) }
+        else { selectedIds.insert(item.id) }
+    }
+
+    /// Pilih semua unduhan yang sedang terlihat (hasil filter + pencarian).
+    func setAllChecked(_ checked: Bool, in list: [DownloadItem]) {
+        if checked {
+            selectedIds.formUnion(list.map(\.id))
+        } else {
+            selectedIds.subtract(list.map(\.id))
+        }
+    }
+
+    func allChecked(in list: [DownloadItem]) -> Bool {
+        !list.isEmpty && list.allSatisfy { selectedIds.contains($0.id) }
+    }
+
+    /// Unduhan yang dicentang, urut sesuai antrean.
+    func checkedItems(from items: [DownloadItem]) -> [DownloadItem] {
+        items.filter { selectedIds.contains($0.id) }
+    }
+
+    /// Buang id yang sudah tidak ada di antrean (setelah unduhan dihapus).
+    /// Mode pilih TIDAK dimatikan hanya karena belum ada yang dicentang —
+    /// kalau begitu mode akan langsung hilang saat baru dinyalakan.
+    func pruneSelection(_ items: [DownloadItem]) {
+        guard !selectedIds.isEmpty else { return }
+        let alive = Set(items.map(\.id))
+        let pruned = selectedIds.intersection(alive)
+        guard pruned != selectedIds else { return }
+        selectedIds = pruned
+        if selectedIds.isEmpty { selectionMode = false }
     }
 
     func filtered(_ items: [DownloadItem]) -> [DownloadItem] {
@@ -73,6 +125,14 @@ final class DownloadListViewModel: ObservableObject {
         case .smallest:
             return list.sorted { effectiveSize($0) < effectiveSize($1) }
         }
+    }
+
+    /// Judul header saat mode multi-pilih aktif.
+    func selectionSubtitle() -> String {
+        if selectedIds.isEmpty {
+            return NSLocalizedString("select.title", value: "Pilih Unduhan", comment: "")
+        }
+        return String(format: NSLocalizedString("select.titleCount", value: "%d Dipilih", comment: ""), selectedIds.count)
     }
 
     func title() -> String {

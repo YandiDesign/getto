@@ -121,6 +121,7 @@ struct GlassIconButton: View {
             .background(.ultraThinMaterial, in: Circle())
         }
         .buttonStyle(.plain)
+        .noFocusRing()
         .overlay(Circle().strokeBorder(active ? Color.blue : Color.white.opacity(0.3), lineWidth: 1.5))
         .shadow(color: .black.opacity(0.12), radius: 6, y: 3)
         .contentShape(Circle())
@@ -285,4 +286,40 @@ func itemSubtitleLine(_ item: DownloadItem) -> String {
         return item.errorMessage ?? NSLocalizedString("status.failed", value: "Gagal", comment: "")
     }
     return "\(NSLocalizedString("status.queued", value: "Menunggu", comment: "")) • \(size)"
+}
+
+// MARK: - Menu konteks opsional (dimatikan total saat mode pilih aktif)
+
+struct OptionalContextMenu<MenuItems: View>: ViewModifier {
+    let enabled: Bool
+    @ViewBuilder let menuItems: () -> MenuItems
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if enabled {
+            content.contextMenu(menuItems: menuItems)
+        } else {
+            content
+        }
+    }
+}
+
+extension View {
+    func optionalContextMenu<MenuItems: View>(enabled: Bool,
+                                             @ViewBuilder menuItems: @escaping () -> MenuItems) -> some View {
+        modifier(OptionalContextMenu(enabled: enabled, menuItems: menuItems))
+    }
+}
+
+// MARK: - Matikan focus ring default macOS
+
+/// App ini memakai tombol kustom (`.buttonStyle(.plain)`) yang sudah
+/// menandai statusnya sendiri lewat warna/border, jadi focus ring abu-abu
+/// bawaan macOS hanya menambah noise. API resmi untuk mematikan ring saja
+/// (`focusEffectDisabled()`) baru ada di macOS 14 dan toolchain proyek ini
+/// masih SDK 13, jadi tombol dibuat tidak bisa difokuskan.
+extension View {
+    func noFocusRing() -> some View {
+        focusable(false)
+    }
 }

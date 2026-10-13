@@ -17,21 +17,38 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             let item = QueueManager.shared.items.first(where: { $0.id == vm.selectedId })
             let responder = NSApp.keyWindow?.firstResponder
             let inText = (responder is NSTextView) || (responder is NSControl)
+            let keyWindow = NSApp.keyWindow
+            // Saat sheet tampil, keyWindow adalah jendela sheet itu sendiri,
+            // jadi harus dicek sheetParent-nya juga (hanya attachedSheet tidak
+            // cukup — kalau tidak, Esc dianggap untuk list dan isinya hilang).
+            let sheetOpen = (keyWindow?.attachedSheet != nil) || (keyWindow?.sheetParent != nil)
+            let cmd = event.modifierFlags.contains(.command)
+            // ⌘A saat mode pilih → pilih semua yang terlihat di daftar.
+            if vm.selectionMode, cmd, event.keyCode == 0, !event.modifierFlags.contains(.option),
+               !sheetOpen {
+                let list = vm.filtered(QueueManager.shared.items)
+                vm.setAllChecked(!vm.allChecked(in: list), in: list)
+                return nil
+            }
             let action = KeyHandler.resolve(
                 keyCode: event.keyCode,
                 modifiersEmpty: event.modifierFlags.intersection([.command, .control, .option]).isEmpty,
                 characters: event.charactersIgnoringModifiers,
                 inTextOrControl: inText,
                 searchEmpty: vm.searchText.trimmingCharacters(in: .whitespaces).isEmpty,
-                sheetOpen: NSApp.keyWindow?.attachedSheet != nil,
-                hasSelection: vm.selectedId != nil,
+                sheetOpen: sheetOpen,
+                hasSelection: vm.selectionMode || vm.selectedId != nil,
                 previewable: QuickLookService.shouldPreview(item: item, firstResponder: responder)
             )
             switch action {
             case .none:
                 return event
             case .clearSelection:
-                vm.selectedId = nil
+                if vm.selectionMode {
+                    vm.exitSelectionMode()
+                } else {
+                    vm.selectedId = nil
+                }
                 return nil
             case .quickLook:
                 if let item = item,

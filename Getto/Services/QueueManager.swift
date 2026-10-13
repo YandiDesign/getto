@@ -448,35 +448,58 @@ final class QueueManager: ObservableObject {
         launchNextIfNeeded()
     }
 
+    /// Hapus satu unduhan dari daftar. `deleteFile: true` ikut menghapus
+    /// berkas/folder hasil unduhan dari disk (dipindahkan ke Sampah).
     func cancel(_ item: DownloadItem, deleteFile: Bool = false) {
-        guard let idx = items.firstIndex(where: { $0.id == item.id }) else { return }
-        probeTasks.removeValue(forKey: items[idx].id)
-        // Hentikan juga proses media yang masih hidup (sebelumnya bocor).
-        mediaTasks[items[idx].id]?.cancel()
-        mediaTasks.removeValue(forKey: items[idx].id)
-        mediaGen.removeValue(forKey: items[idx].id)
-        if let proc = mediaProcesses[items[idx].id] {
-            proc.terminate()
-            mediaProcesses.removeValue(forKey: items[idx].id)
+        cancel([item], deleteFiles: deleteFile)
+    }
+
+    /// Hapus banyak unduhan sekaligus (mode multi-pilih).
+    /// - Parameter deleteFiles: true = hapus juga berkas di disk, false = cukup
+    ///   hilangkan dari daftar dan biarkan berkasnya.
+    func cancel(_ targets: [DownloadItem], deleteFiles: Bool) {
+        guard !targets.isEmpty else { return }
+        for target in targets {
+            guard let idx = items.firstIndex(where: { $0.id == target.id }) else { continue }
+            probeTasks.removeValue(forKey: items[idx].id)
+            // Hentikan juga proses media yang masih hidup (sebelumnya bocor).
+            mediaTasks[items[idx].id]?.cancel()
+            mediaTasks.removeValue(forKey: items[idx].id)
+            mediaGen.removeValue(forKey: items[idx].id)
+            if let proc = mediaProcesses[items[idx].id] {
+                proc.terminate()
+                mediaProcesses.removeValue(forKey: items[idx].id)
+            }
+            if let gid = items[idx].engineId {
+                Task { try? await self.aria2.cancel(engineId: gid) }
+            }
+            if deleteFiles {
+                deleteFromDisk(items[idx].destinationPath)
+            }
+            items.remove(at: idx)
         }
-        if let gid = items[idx].engineId {
-            Task { try? await self.aria2.cancel(engineId: gid) }
-        }
-        if deleteFile {
-            try? FileManager.default.removeItem(atPath: items[idx].destinationPath)
-        }
-        items.remove(at: idx)
         save()
         launchNextIfNeeded()
+    }
+
+    /// Pindahkan ke Sampah bila memungkinkan; jatuh ke hapus permanen kalau
+    /// Trash tidak bisa dipakai (mis. volume eksternal / izin Reuters).
+    private func deleteFromDisk(_ path: String) {
+        guard !path.isEmpty, FileManager.default.fileExists(atPath: path) else { return }
+        var trash: NSURL?
+        do {
+            try FileManager.default.trashItem(at: URL(fileURLWithPath: path), resultingItemURL: &trash)
+        } catch {
+            try? FileManager.default.removeItem(atPath: path)
+        }
     }
 
     func retry(_ item: DownloadItem) { resume(item) }
 
     func pauseAll() { items.filter { $0.status == .downloading || $0.status == .queued }.forEach { pause($0) } }
     func resumeAll() { items.filter { $0.status == .paused || $0.status == .failed }.forEach { resume($0) } }
-    func clearCompleted() {
-        items.removeAll { $0.status == .completed }
-        save()
+    func clearCompleted(deleteFiles: Bool = false) {
+        cancel(items.filter { $0.status == .completed }, deleteFiles: deleteFiles)
     }
 
     // MARK: - Scheduler

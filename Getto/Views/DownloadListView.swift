@@ -9,6 +9,11 @@ struct DownloadListView: View {
     @Binding var selectedId: UUID?
     @Binding var detailVisible: Bool
 
+    @State private var showBulkDelete = false
+    /// Snapshot item yang dicentang saat tombol tong sampah ditekan, supaya
+    /// isi sheet tidak ikut berubah bila seleksi list berubah saat sheet terbuka.
+    @State private var pendingDelete: [DownloadItem] = []
+
     var body: some View {
         let list = vm.filtered(queue.items)
         VStack(alignment: .leading, spacing: 12) {
@@ -29,6 +34,7 @@ struct DownloadListView: View {
                             .foregroundColor(.secondary)
                     }
                     .buttonStyle(.plain)
+                    .noFocusRing()
                     .accessibilityLabel(NSLocalizedString("common.clear", value: "Hapus", comment: ""))
                 }
             }
@@ -43,7 +49,7 @@ struct DownloadListView: View {
             // Judul + toggle
             HStack(alignment: .firstTextBaseline) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(vm.title())
+                    Text(vm.selectionMode ? vm.selectionSubtitle() : vm.title())
                         .font(.system(size: 20, weight: .bold, design: .rounded))
                         .lineLimit(1)
                     Text(listSubtitle(count: list.count))
@@ -52,9 +58,14 @@ struct DownloadListView: View {
                 }
                 Spacer()
                 HStack(spacing: 6) {
-                    SortMenuButton(vm: vm)
-                    layoutButton(grid: false, icon: "list.bullet")
-                    layoutButton(grid: true, icon: "square.grid.2x2")
+                    if vm.selectionMode {
+                        selectionDoneButton
+                    } else {
+                        SortMenuButton(vm: vm)
+                        layoutButton(grid: false, icon: "list.bullet")
+                        layoutButton(grid: true, icon: "square.grid.2x2")
+                        selectModeButton
+                    }
                 }
                 .padding(3)
                 .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 11, style: .continuous))
@@ -69,8 +80,14 @@ struct DownloadListView: View {
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
                         ForEach(list) { item in
-                            DownloadTile(item: item, queue: queue, selected: selectedId == item.id)
-                                .onTapGesture { select(item) }
+                            DownloadTile(
+                                item: item,
+                                queue: queue,
+                                selected: selectedId == item.id,
+                                selectionMode: vm.selectionMode,
+                                checked: vm.isChecked(item)
+                            )
+                            .onTapGesture { handleTap(item) }
                         }
                     }
                     .padding(.horizontal, 16)
@@ -81,8 +98,14 @@ struct DownloadListView: View {
                 ScrollView {
                     LazyVStack(spacing: 12) {
                         ForEach(list) { item in
-                            DownloadCard(item: item, queue: queue, selected: selectedId == item.id)
-                                .onTapGesture { select(item) }
+                            DownloadCard(
+                                item: item,
+                                queue: queue,
+                                selected: selectedId == item.id,
+                                selectionMode: vm.selectionMode,
+                                checked: vm.isChecked(item)
+                            )
+                            .onTapGesture { handleTap(item) }
                         }
                     }
                     .padding(.horizontal, 16)
@@ -90,8 +113,51 @@ struct DownloadListView: View {
                 }
                 .scrollContentBackground(.hidden)
             }
+
+            // Baris aksi diletakkan sebagai elemen layout (bukan .overlay):
+            // dengan .overlay, kartu yang ada di balik tombol tong sampah
+            // tetap menerima klik sehingga tombolnya tidak bisa ditekan.
+            if vm.selectionMode && !queue.items.isEmpty {
+                selectionBar
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 14)
+                    .padding(.top, 6)
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .animation(.easeInOut(duration: 0.18), value: vm.selectionMode)
+        .sheet(isPresented: $showBulkDelete) {
+            DeleteDownloadsSheet(
+                targets: pendingDelete,
+                onDeleteFiles: {
+                    queue.cancel(pendingDelete, deleteFiles: true)
+                    afterBulkDelete()
+                },
+                onRemoveFromList: {
+                    queue.cancel(pendingDelete, deleteFiles: false)
+                    afterBulkDelete()
+                }
+            )
+        }
+        .onChange(of: queue.items) { newValue in
+            vm.pruneSelection(newValue)
+        }
+    }
+
+    // MARK: - Aksi ketuk
+
+    private func afterBulkDelete() {
+        pendingDelete = []
+        vm.exitSelectionMode()
+        selectedId = nil
+    }
+
+    private func handleTap(_ item: DownloadItem) {
+        if vm.selectionMode {
+            vm.toggleCheck(item)
+        } else {
+            select(item)
+        }
     }
 
     private func select(_ item: DownloadItem) {
@@ -99,6 +165,94 @@ struct DownloadListView: View {
         // Lepas fokus dari kontrol/teks agar Space berikutnya = Quick Look,
         // bukan mengaktifkan tombol atau mengetik di kolom cari.
         NSApp.keyWindow?.makeFirstResponder(nil)
+    }
+
+    // MARK: - Mode pilih
+
+    private var selectModeButton: some View {
+        Button { vm.enterSelectionMode() } label: {
+            Image(systemName: "checklist")
+                .font(.system(size: 13, weight: .medium))
+                .foregroundColor(.secondary)
+                .frame(width: 36, height: 30)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .noFocusRing()
+        .disabled(queue.items.isEmpty)
+        .opacity(queue.items.isEmpty ? 0.4 : 1)
+        .help(NSLocalizedString("select.enter", value: "Pilih unduhan", comment: ""))
+    }
+
+    private var selectionDoneButton: some View {
+        Button { vm.exitSelectionMode() } label: {
+            Text(NSLocalizedString("select.done", value: "Selesai", comment: ""))
+                .font(.system(size: 12.5, weight: .semibold))
+                .foregroundColor(.primary)
+                .padding(.horizontal, 10)
+                .frame(height: 30)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .noFocusRing()
+        .help(NSLocalizedString("select.done", value: "Selesai", comment: ""))
+    }
+
+    private var selectionBar: some View {
+        let list = vm.filtered(queue.items)
+        let checked = vm.checkedItems(from: queue.items)
+        let allOn = vm.allChecked(in: list)
+        return HStack(spacing: 10) {
+            Button {
+                vm.setAllChecked(!allOn, in: list)
+            } label: {
+                Text(allOn
+                     ? NSLocalizedString("select.none", value: "Batal Pilih", comment: "")
+                     : NSLocalizedString("select.all", value: "Pilih Semua", comment: ""))
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(.primary)
+                    .padding(.horizontal, 10)
+                    .frame(height: 28)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .noFocusRing()
+
+            Text(checkedCountText(checked.count))
+                .font(.system(size: 11.5))
+                .foregroundColor(.secondary)
+                .lineLimit(1)
+
+            Spacer(minLength: 8)
+
+            Button {
+                if !checked.isEmpty {
+                    pendingDelete = checked
+                    showBulkDelete = true
+                }
+            } label: {
+                Image(systemName: "trash")
+                    .font(.system(size: 12.5, weight: .semibold))
+                    .foregroundColor(.white)
+                    .frame(width: 32, height: 28)
+                    .background(RoundedRectangle(cornerRadius: 8, style: .continuous).fill(Color.red))
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .noFocusRing()
+            .disabled(checked.isEmpty)
+            .opacity(checked.isEmpty ? 0.4 : 1)
+            .help(NSLocalizedString("delete.action.files", value: "Hapus File", comment: ""))
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 7)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).strokeBorder(Color.white.opacity(0.25), lineWidth: 1))
+        .shadow(color: .black.opacity(0.16), radius: 12, y: 5)
+    }
+
+    private func checkedCountText(_ count: Int) -> String {
+        String(format: NSLocalizedString("select.count", value: "%d dipilih", comment: ""), count)
     }
 
     private func layoutButton(grid: Bool, icon: String) -> some View {
@@ -115,6 +269,7 @@ struct DownloadListView: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .noFocusRing()
         .help(grid
             ? NSLocalizedString("layout.grid", value: "Tampilan grid", comment: "")
             : NSLocalizedString("layout.list", value: "Tampilan daftar", comment: ""))
@@ -161,6 +316,7 @@ struct SortMenuButton: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .noFocusRing()
         .popover(isPresented: $showMenu, arrowEdge: .top) {
             VStack(alignment: .leading, spacing: 2) {
                 Text(NSLocalizedString("sort.title", value: "Urutkan", comment: ""))
@@ -190,6 +346,7 @@ struct SortMenuButton: View {
                         .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
+                    .noFocusRing()
                     .accessibilityLabel(o.label)
                 }
             }
@@ -207,9 +364,18 @@ struct DownloadCard: View {
     let item: DownloadItem
     @ObservedObject var queue: QueueManager
     var selected: Bool
+    var selectionMode: Bool = false
+    var checked: Bool = false
+
+    @State private var showDeleteSheet = false
+
+    private var highlighted: Bool { selectionMode ? checked : selected }
 
     var body: some View {
         HStack(spacing: 12) {
+            if selectionMode {
+                checkmark
+            }
             thumb
             VStack(alignment: .leading, spacing: 5) {
                 Text(item.fileName)
@@ -231,17 +397,32 @@ struct DownloadCard: View {
                     .lineLimit(item.status == .failed ? 2 : 1)
             }
             Spacer(minLength: 6)
-            trailing
+            if !selectionMode {
+                trailing
+            }
         }
         .padding(12)
-        .glassCard(tint: selected ? .accentColor : nil, showStroke: selected)
+        .glassCard(tint: highlighted ? .accentColor : nil, showStroke: highlighted)
         .overlay(
             RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .strokeBorder(selected ? Color.accentColor.opacity(0.9) : Color.clear, lineWidth: 1.5)
+                .strokeBorder(highlighted ? Color.accentColor.opacity(0.9) : Color.clear, lineWidth: 1.5)
         )
-        .contextMenu { rowMenu }
+        .optionalContextMenu(enabled: !selectionMode) { rowMenu }
+        .sheet(isPresented: $showDeleteSheet) {
+            DeleteDownloadsSheet(
+                targets: [item],
+                onDeleteFiles: { queue.cancel(item, deleteFile: true) },
+                onRemoveFromList: { queue.cancel(item) }
+            )
+        }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(item.fileName), \(itemSubtitleLine(item))")
+    }
+
+    private var checkmark: some View {
+        Image(systemName: checked ? "checkmark.circle.fill" : "circle")
+            .font(.system(size: 18, weight: .medium))
+            .foregroundColor(checked ? Color.accentColor : Color.secondary.opacity(0.7))
     }
 
     @ViewBuilder
@@ -274,6 +455,7 @@ struct DownloadCard: View {
                         .background(Circle().fill(Color.white.opacity(0.28)))
                 }
                 .buttonStyle(.plain)
+                .noFocusRing()
                 .help(NSLocalizedString("menu.pause", value: "Pause", comment: ""))
             case .paused, .failed:
                 Button { queue.resume(item) } label: {
@@ -284,6 +466,7 @@ struct DownloadCard: View {
                         .background(Circle().fill(Color.accentColor))
                 }
                 .buttonStyle(.plain)
+                .noFocusRing()
                 .help(NSLocalizedString("menu.resume", value: "Resume", comment: ""))
             case .completed:
                 Image(systemName: "checkmark.circle.fill")
@@ -299,6 +482,7 @@ struct DownloadCard: View {
                         .background(Circle().fill(Color.white.opacity(0.28)))
                 }
                 .buttonStyle(.plain)
+                .noFocusRing()
             }
             CardMenuButton(item: item, queue: queue)
         }
@@ -312,6 +496,7 @@ struct DownloadCard: View {
         let item: DownloadItem
         @ObservedObject var queue: QueueManager
         @State private var showMenu = false
+        @State private var showDeleteSheet = false
 
         var body: some View {
             Button { showMenu.toggle() } label: {
@@ -322,12 +507,20 @@ struct DownloadCard: View {
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            .noFocusRing()
             .popover(isPresented: $showMenu, arrowEdge: .trailing) {
                 VStack(alignment: .leading, spacing: 2) {
                     menuRows
                 }
                 .padding(8)
                 .frame(minWidth: 200)
+            }
+            .sheet(isPresented: $showDeleteSheet) {
+                DeleteDownloadsSheet(
+                    targets: [item],
+                    onDeleteFiles: { queue.cancel(item, deleteFile: true) },
+                    onRemoveFromList: { queue.cancel(item) }
+                )
             }
             .accessibilityLabel("Menu")
         }
@@ -373,7 +566,7 @@ struct DownloadCard: View {
             }
             Divider()
             menuRow("trash", NSLocalizedString("menu.delete", value: "Hapus", comment: ""), destructive: true) {
-                dismissThen { queue.cancel(item) }
+                dismissThen { showDeleteSheet = true }
             }
         }
 
@@ -388,6 +581,7 @@ struct DownloadCard: View {
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            .noFocusRing()
             .accessibilityLabel(title)
         }
     }
@@ -415,7 +609,7 @@ struct DownloadCard: View {
             }
         }
         Divider()
-        Button(NSLocalizedString("menu.delete", value: "Hapus", comment: ""), role: .destructive) { queue.cancel(item) }
+        Button(NSLocalizedString("menu.delete", value: "Hapus", comment: ""), role: .destructive) { showDeleteSheet = true }
     }
 }
 
@@ -425,18 +619,31 @@ struct DownloadTile: View {
     let item: DownloadItem
     @ObservedObject var queue: QueueManager
     var selected: Bool
+    var selectionMode: Bool = false
+    var checked: Bool = false
+
+    @State private var showDeleteSheet = false
+
+    private var highlighted: Bool { selectionMode ? checked : selected }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
+                if selectionMode {
+                    Image(systemName: checked ? "checkmark.circle.fill" : "circle")
+                        .font(.system(size: 18, weight: .medium))
+                        .foregroundColor(checked ? Color.accentColor : Color.secondary.opacity(0.7))
+                }
                 FileTile(fileName: item.fileName, size: 40)
                 Spacer()
-                if item.status == .completed {
-                    Image(systemName: "checkmark.circle.fill").foregroundColor(.blue).font(.system(size: 20))
-                } else if item.status == .failed {
-                    Image(systemName: "exclamationmark.circle.fill").foregroundColor(.red).font(.system(size: 20))
-                } else {
-                    DownloadCard.CardMenuButton(item: item, queue: queue)
+                if !selectionMode {
+                    if item.status == .completed {
+                        Image(systemName: "checkmark.circle.fill").foregroundColor(.blue).font(.system(size: 20))
+                    } else if item.status == .failed {
+                        Image(systemName: "exclamationmark.circle.fill").foregroundColor(.red).font(.system(size: 20))
+                    } else {
+                        DownloadCard.CardMenuButton(item: item, queue: queue)
+                    }
                 }
             }
             Text(item.fileName)
@@ -456,9 +663,16 @@ struct DownloadTile: View {
             }
         }
         .padding(12)
-        .glassCard(tint: selected ? .accentColor : nil, showStroke: selected)
-        .contextMenu {
-            Button(NSLocalizedString("menu.delete", value: "Hapus", comment: ""), role: .destructive) { queue.cancel(item) }
+        .glassCard(tint: highlighted ? .accentColor : nil, showStroke: highlighted)
+        .optionalContextMenu(enabled: !selectionMode) {
+            Button(NSLocalizedString("menu.delete", value: "Hapus", comment: ""), role: .destructive) { showDeleteSheet = true }
+        }
+        .sheet(isPresented: $showDeleteSheet) {
+            DeleteDownloadsSheet(
+                targets: [item],
+                onDeleteFiles: { queue.cancel(item, deleteFile: true) },
+                onRemoveFromList: { queue.cancel(item) }
+            )
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(item.fileName), \(itemSubtitleLine(item))")
